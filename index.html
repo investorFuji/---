@@ -298,5 +298,55 @@
 
     refresh();
   </script>
+  <!-- 顯示區塊（正常時顯示數字；失敗時顯示徽章） -->
+<span class="pill" id="counterPill">
+  👀 瀏覽 <b id="views">—</b> • 🧑‍🤝‍🧑 唯一 <b id="uniques">—</b>
+</span>
+<span class="badge" id="fallbackBadge" style="display:none">
+  <img id="hitsBadge" alt="views badge" style="height:20px" />
+  <span class="muted">（備援）</span>
+</span>
+
+<script>
+  (function(){
+    const $ = id => document.getElementById(id);
+    const setText = (id,v)=>{ const el=$(id); if (el) el.textContent = (v||0).toLocaleString('zh-TW'); };
+
+    // ① 固定使用你的公開網址（避免本機 file:// 導致徽章失效）
+    const PUBLIC_URL = "https://investorfuji.github.io/BtcPlan/"; // ← 若你的 Pages 網址不同，改這裡
+
+    // ② countapi（主線）
+    const NS = "investorfuji-BtcPlan";         // 命名空間（可自訂，但請保持一致）
+    const TOTAL_KEY = "pageviews";
+    const UNIQUE_KEY = "uniques";
+    const UNIQUE_FLAG = "fuji_calc_unique_flag_BtcPlan"; // 每瀏覽器一次的旗標（避免和其他站衝突）
+    const base = "https://api.countapi.dev";
+    const hit = (k)=>fetch(`${base}/hit/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
+    const get = (k)=>fetch(`${base}/get/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
+    const timeout = (p,ms=2500)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms))]);
+
+    // ③ hits.seeyoufarm（備援：只顯示瀏覽）
+    const showFallback = () => {
+      const url = encodeURIComponent(PUBLIC_URL);
+      const badge = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${url}&count_bg=%233CAF50&title_bg=%23555555&title=views&edge_flat=true`;
+      $("counterPill").style.display = "none";
+      $("hitsBadge").src = badge;
+      $("fallbackBadge").style.display = "inline-flex";
+    };
+
+    // 總瀏覽
+    timeout(hit(TOTAL_KEY))
+      .then(r=>r.json()).then(d=>setText("views", d.value))
+      .catch(showFallback);
+
+    // 唯一（每瀏覽器一次）
+    const seen = localStorage.getItem(UNIQUE_FLAG);
+    const req = seen ? get(UNIQUE_KEY) : hit(UNIQUE_KEY);
+    if (!seen) localStorage.setItem(UNIQUE_FLAG, "1");
+    timeout(req)
+      .then(r=>r.json()).then(d=>setText("uniques", d.value))
+      .catch(()=>{}); // 若失敗就不顯示唯一，但不影響頁面
+  })();
+</script>
 </body>
 </html>

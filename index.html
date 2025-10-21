@@ -290,9 +290,9 @@
       const updateUnique = (path) => fetch(path).then(r=>r.json()).then(d=>{ $('uniques').textContent = (d.value||0).toLocaleString('zh-TW'); }).catch(()=>{ $('uniques').textContent = '—'; });
       if (!seen) {
         localStorage.setItem(UNIQUE_FLAG, '1');
-        updateUnique(`https://api.countapi.xyz/hit/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
+        updateUnique(`https://api.countapi.dev//hit/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
       } else {
-        updateUnique(`https://api.countapi.xyz/get/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
+        updateUnique(`https://api.countapi.dev//get/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
       }
     })();
 

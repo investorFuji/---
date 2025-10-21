@@ -1,320 +1,113 @@
-
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>通膨 vs. 投資利息 計算器 · 富士版</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#0ea5e9;--ring:#e2e8f0}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(#f8fafc,#fff);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji';color:var(--text)}
-    .container{max-width:1080px;margin:24px auto;padding:0 16px}
-    .title{font-weight:800;letter-spacing:-.02em}
-    .sub{color:var(--muted)}
-    .grid{display:grid;gap:16px}
-    @media(min-width:900px){.grid-4{grid-template-columns:repeat(4,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
-    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.03)}
-    .card .content{padding:16px}
-    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
-    input,select{width:100%;padding:10px 12px;border:1px solid var(--ring);border-radius:10px;font-size:14px;background:#fff}
-    .stat{font-weight:800;font-size:24px}
-    table{width:100%;border-collapse:collapse;font-size:12px}
-    th,td{text-align:left;padding:8px 10px;border-bottom:1px dashed #e5e7eb}
-    tr.hit{background:rgba(16,185,129,.08)}
-    .row{display:flex;align-items:center;gap:8px}
-    .muted{color:var(--muted);font-size:12px}
-    .right{text-align:right}
-    .btn{padding:10px 12px;border-radius:10px;border:1px solid var(--ring);background:#fff;cursor:pointer}
-    .btn-primary{background:#0f172a;color:#fff;border-color:#0f172a}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px}
-    .footer{color:var(--muted);font-size:12px;line-height:1.6;margin:10px 0 30px}
-    .badge{display:none; align-items:center; gap:6px}
-    .badge img{height:20px; vertical-align:middle}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 28.0px 'PingFang TC'; color: #0d121f; -webkit-text-stroke: #0d121f}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang TC'; color: #526078; -webkit-text-stroke: #526078}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #526078; -webkit-text-stroke: #526078}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.Apple Color Emoji UI'; color: #291b92; -webkit-text-stroke: #291b92}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #291b92; -webkit-text-stroke: #291b92}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang TC'; color: #526078; -webkit-text-stroke: #526078; background-color: #ffffff}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0d121f; -webkit-text-stroke: #000000; background-color: #ffffff}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; color: #0d121f; -webkit-text-stroke: #000000; min-height: 17.0px}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Helvetica Neue'; -webkit-text-stroke: #000000}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: right; font: 24.0px 'Helvetica Neue'; color: #0d121f; -webkit-text-stroke: #0d121f}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #526078; -webkit-text-stroke: #526078; min-height: 15.0px}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 24.0px 'Helvetica Neue'; color: #0d121f; -webkit-text-stroke: #0d121f}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #0d121f; -webkit-text-stroke: #0d121f; min-height: 15.0px}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang TC'; color: #0d121f; -webkit-text-stroke: #0d121f}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 28.0px 'Helvetica Neue'; font-kerning: none}
+    span.s3 {font: 12.0px 'Helvetica Neue'; font-kerning: none}
+    span.s4 {font: 12.0px '.CJK Symbols Fallback TC'; font-kerning: none}
+    span.s5 {font: 12.0px 'PingFang TC'; font-kerning: none}
+    span.s6 {font-kerning: none; background-color: #eaeeff}
+    span.s7 {font: 12.0px 'Helvetica Neue'; font-kerning: none; background-color: #eaeeff}
+    span.s8 {font: 12.0px 'PingFang TC'; font-kerning: none; background-color: #eaeeff}
+    span.s9 {font-kerning: none; background-color: #ffffff}
+    span.s10 {font: 14.0px 'Songti TC'; font-kerning: none}
+    span.s11 {font: 14.0px Times; font-kerning: none}
+    span.s12 {font: 12.0px 'Helvetica Neue'; font-kerning: none; background-color: #ffffff}
+    span.s13 {font: 12.0px 'PingFang TC'; font-kerning: none; background-color: #ffffff}
+    span.s14 {font: 11.0px 'PingFang TC'; font-kerning: none; background-color: #0d121f}
+    span.s15 {font-kerning: none; background-color: #0d121f}
+    table.t1 {border-collapse: collapse}
+    td.td1 {width: 40.5px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
+    td.td2 {width: 55.3px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
+    td.td3 {width: 137.6px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
+    td.td4 {width: 167.2px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
+    td.td5 {width: 152.4px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
+    td.td6 {width: 166.1px; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #0d121f #0d121f #dfe1e6 #0d121f; padding: 8.0px 10.0px 8.0px 10.0px}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="row" style="justify-content:space-between;margin-bottom:8px">
-      <div>
-        <div class="title" style="font-size:28px">通膨 vs. 投資利息 計算器</div>
-        <div class="sub">輸入生活費與通膨、投入本金與年化，找出「利息 ≥ 當年生活費」的年份。</div>
-      </div>
-      <div class="row muted">
-        <span>Investor Fuji · 工具原型</span>
-        <span class="pill" id="counterPill" title="若第三方 API 被阻擋，將自動切換為備援徽章">
-          👀 瀏覽 <b id="views">—</b> • 🧑‍🤝‍🧑 唯一 <b id="uniques">—</b>
-        </span>
-        <span class="badge" id="fallbackBadge">
-          <img id="hitsBadge" alt="views badge" />
-          <span class="muted">（備援）</span>
-        </span>
-      </div>
-    </div>
-
-    <div class="grid grid-4">
-      <div class="card"><div class="content">
-        <label>目前年齡</label>
-        <input id="age" type="number" value="30">
-      </div></div>
-      <div class="card"><div class="content">
-        <label>試算年數</label>
-        <input id="horizon" type="number" value="25">
-      </div></div>
-      <div class="card"><div class="content">
-        <label>輸入資金模式</label>
-        <select id="mode">
-          <option value="BTC">以 BTC 數量 + 價格</option>
-          <option value="TWD">以台幣金額</option>
-        </select>
-      </div></div>
-      <div class="card"><div class="content">
-        <label>年化報酬率（%）</label>
-        <input id="returnPct" type="number" step="0.1" value="15">
-      </div></div>
-    </div>
-
-    <div class="grid grid-3" style="margin-top:16px">
-      <div class="card"><div class="content">
-        <label>目前年生活費（TWD）</label>
-        <input id="expenseNow" value="100000">
-      </div></div>
-      <div class="card"><div class="content">
-        <label>年通膨率（%）</label>
-        <input id="inflationPct" type="number" step="0.1" value="3">
-      </div></div>
-      <div class="card"><div class="content" id="principalBlock">
-        <label>初始本金</label>
-        <div class="row">
-          <div class="pill" id="modeTag">BTC</div>
-          <div class="stat right" style="flex:1">TWD <span id="principal">-</span></div>
-        </div>
-        <div class="muted" id="hint"></div>
-      </div></div>
-    </div>
-
-    <div id="btcRow" class="grid grid-3" style="margin-top:16px">
-      <div class="card"><div class="content">
-        <label>持有 BTC 數量（顆）</label>
-        <input id="btcAmount" value="0.10">
-      </div></div>
-      <div class="card"><div class="content">
-        <label>BTC 單價（TWD/顆）</label>
-        <input id="btcPriceTWD" value="3000000">
-      </div></div>
-      <div class="card"><div class="content">
-        <label>（自動計算）</label>
-        <div class="muted">依「顆數 × 單價」換算初始本金</div>
-      </div></div>
-    </div>
-
-    <div id="twdRow" class="grid grid-3" style="margin-top:16px;display:none">
-      <div class="card"><div class="content">
-        <label>初始投入金額（TWD）</label>
-        <input id="initialTWD" value="600000">
-      </div></div>
-    </div>
-
-    <div class="grid grid-3" style="margin-top:16px">
-      <div class="card"><div class="content">
-        <div class="muted">突破年份（年利息 ≥ 當年生活費）</div>
-        <div class="stat" id="breakYear">—</div>
-        <div class="muted" id="breakDetail"></div>
-      </div></div>
-      <div class="card"><div class="content">
-        <div class="muted">第 1 年參考</div>
-        <div id="firstYear"></div>
-      </div></div>
-      <div class="card"><div class="content">
-        <button class="btn btn-primary" id="exportBtn">匯出 CSV 明細</button>
-      </div></div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <div class="content">
-        <div style="height:380px"><canvas id="chart"></canvas></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <div class="content" style="overflow:auto">
-        <table id="table">
-          <thead>
-            <tr>
-              <th>年</th><th>年齡</th><th>年利息（TWD）</th><th>當年生活費（TWD）</th><th>期末資產（TWD）</th><th>差額（利息-生活費）</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="footer">
-      <b>說明</b>：利息＝期初資產×年化報酬率；生活費＝現在生活費×(1+通膨)^(年數-1)；突破年份為第一次滿足「年利息 ≥ 當年生活費」。本工具為教育試算，未含波動變數、費用、風險與價格波動。
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script>
-    const $ = (id) => document.getElementById(id);
-    const num = (v, fb=0) => {
-      if (typeof v === 'number') return v;
-      const n = Number(String(v||'').replace(/[,\s]/g,''));
-      return Number.isFinite(n) ? n : fb;
-    };
-    const fmt = (n) => Number(n||0).toLocaleString('zh-TW', {maximumFractionDigits:0});
-
-    const inputs = ['age','horizon','expenseNow','inflationPct','returnPct','btcAmount','btcPriceTWD','initialTWD','mode'];
-    inputs.forEach(id => $(id).addEventListener('input', refresh));
-    $('mode').addEventListener('change', () => {
-      const m = $('mode').value;
-      $('btcRow').style.display = m==='BTC' ? '' : 'none';
-      $('twdRow').style.display = m==='TWD' ? '' : 'none';
-      $('modeTag').textContent = m;
-      refresh();
-    });
-
-    let chart;
-    function refresh() {
-      const age = num($('age').value, 30);
-      const horizon = Math.max(1, num($('horizon').value, 25));
-      const expenseNow = num($('expenseNow').value, 100000);
-      const i = num($('inflationPct').value, 3) / 100;
-      const r = num($('returnPct').value, 15) / 100;
-      const mode = $('mode').value;
-
-      const principalTWD = mode==='BTC'
-        ? num($('btcAmount').value, 0.1) * num($('btcPriceTWD').value, 3000000)
-        : num($('initialTWD').value, 600000);
-
-      $('principal').textContent = fmt(principalTWD);
-      $('hint').textContent = mode==='BTC' ? '顆數 × 單價 自動換算' : '可直接輸入台幣金額';
-
-      let valuePrev = principalTWD;
-      const rows = [];
-      for (let year=1; year<=horizon; year++) {
-        const interest = valuePrev * r;
-        const valueEnd = valuePrev + interest;
-        const expense = expenseNow * Math.pow(1+i, year-1);
-        rows.push({year, age: age+year, interest, expense, valueEnd, diff: interest - expense});
-        valuePrev = valueEnd;
-      }
-
-      const be = rows.find(d => d.interest >= d.expense);
-      $('breakYear').textContent = be ? `第 ${be.year} 年（${be.age} 歲）` : '尚未在期間內達成';
-      $('breakDetail').textContent = be ? `當年利息 TWD ${fmt(be.interest)} · 生活費 TWD ${fmt(be.expense)}` : '';
-
-      if (rows[0]) {
-        const d0 = rows[0];
-        $('firstYear').innerHTML = `
-          <div>利息：<b>TWD ${fmt(d0.interest)}</b></div>
-          <div>生活費：<b>TWD ${fmt(d0.expense)}</b></div>
-          <div style="color:${d0.diff>=0?'#059669':'#dc2626'}">差額：${d0.diff>=0?'+':''}${fmt(d0.diff)}</div>
-        `;
-      }
-
-      const tb = $('table').querySelector('tbody');
-      tb.innerHTML = '';
-      rows.forEach(row => {
-        const tr = document.createElement('tr');
-        if (row.interest >= row.expense) tr.classList.add('hit');
-        tr.innerHTML = `
-          <td>${row.year}</td>
-          <td>${row.age}</td>
-          <td>${fmt(row.interest)}</td>
-          <td>${fmt(row.expense)}</td>
-          <td>${fmt(row.valueEnd)}</td>
-          <td style="color:${row.diff>=0?'#065f46':'#b91c1c'}">${row.diff>=0?'+':''}${fmt(row.diff)}</td>
-        `;
-        tb.appendChild(tr);
-      });
-
-      const labels = rows.map(r => 'Y'+r.year);
-      const interestData = rows.map(r => Math.round(r.interest));
-      const expenseData  = rows.map(r => Math.round(r.expense));
-
-      if (!chart) {
-        const ctx = $('chart').getContext('2d');
-        chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels,
-            datasets: [
-              { label: '年利息', data: interestData, tension:.25 },
-              { label: '當年生活費', data: expenseData, tension:.25 },
-            ]
-          },
-          options: {
-            responsive: true,
-            interaction: { mode: 'index', intersect: false },
-            scales: {
-              y: { ticks: { callback: (v)=> (v/10000).toFixed(0)+'萬' } }
-            }
-          }
-        });
-      } else {
-        chart.data.labels = labels;
-        chart.data.datasets[0].data = interestData;
-        chart.data.datasets[1].data = expenseData;
-        chart.update();
-      }
-
-      $('exportBtn').onclick = () => {
-        const header = ['year','age','interest','expense','valueEnd','diff'];
-        const lines = [header.join(',')].concat(rows.map(r => [r.year,r.age,Math.round(r.interest),Math.round(r.expense),Math.round(r.valueEnd),Math.round(r.diff)].join(',')));
-        const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = '富士計算器.csv'; a.click();
-        URL.revokeObjectURL(url);
-      };
-    }
-    refresh();
-  </script>
-
-  <script>
-    (function(){
-      const $ = id => document.getElementById(id);
-      const setText = (id,v)=>{ const el=$(id); if (el) el.textContent = (v||0).toLocaleString('zh-TW'); };
-
-      const PUBLIC_URL = "https://investorfuji.github.io/BtcPlan/";
-      const NS = "investorfuji-BtcPlan";
-      const TOTAL_KEY = "pageviews";
-      const UNIQUE_KEY = "uniques";
-      const UNIQUE_FLAG = "fuji_calc_unique_flag_BtcPlan";
-      const base = "https://api.countapi.dev";
-      const hit = (k)=>fetch(`${base}/hit/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
-      const get = (k)=>fetch(`${base}/get/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
-      const timeout = (p,ms=2500)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms))]);
-
-      const showFallback = () => {
-        const url = encodeURIComponent(PUBLIC_URL);
-        const badge = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${url}&count_bg=%233CAF50&title_bg=%23555555&title=views&edge_flat=true`;
-        const pill = $("counterPill");
-        if (pill) pill.style.display = "none";
-        const img = $("hitsBadge");
-        if (img) img.src = badge;
-        const fb = $("fallbackBadge");
-        if (fb) fb.style.display = "inline-flex";
-      };
-
-      timeout(hit(TOTAL_KEY))
-        .then(r=>r.json()).then(d=>setText("views", d.value))
-        .catch(showFallback);
-
-      try {
-        const seen = localStorage.getItem(UNIQUE_FLAG);
-        const req = seen ? get(UNIQUE_KEY) : hit(UNIQUE_KEY);
-        if (!seen) localStorage.setItem(UNIQUE_FLAG, "1");
-        timeout(req)
-          .then(r=>r.json()).then(d=>setText("uniques", d.value))
-          .catch(()=>{});
-      } catch(e) {}
-    })();
-  </script>
-  <!-- 💰 打賞區塊：Investor Fuji 支持按鈕 -->
+<p class="p1"><span class="s1">通膨</span><span class="s2"> vs. </span><span class="s1">投資利息</span><span class="s2"> </span><span class="s1">計算器</span></p>
+<p class="p2"><span class="s1">輸入生活費與通膨、投入本金與年化，找出「利息</span><span class="s3"> ≥ </span><span class="s1">當年生活費」的年份。</span></p>
+<p class="p3"><span class="s1">Investor Fuji </span><span class="s4">·</span><span class="s1"> </span><span class="s5">工具原型</span></p>
+<p class="p4"><span class="s6">👀</span><span class="s7"> </span><span class="s8">瀏覽</span></p>
+<p class="p5"><span class="s6">—</span></p>
+<p class="p4"><span class="s7">• </span><span class="s6">🧑‍🤝‍🧑</span><span class="s7"> </span><span class="s8">唯一</span></p>
+<p class="p5"><span class="s6">—</span></p>
+<p class="p2"><span class="s9">目前年齡</span></p>
+<p class="p2"><span class="s9">試算年數</span></p>
+<p class="p6"><span class="s1">輸入資金模式</span></p>
+<p class="p7"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s10">以</span><span class="s11"> BTC </span><span class="s10">數量</span><span class="s11"> + </span><span class="s10">價格</span></p>
+<p class="p7"><span class="s1"><span class="Apple-converted-space">          </span></span><span class="s10">以台幣金額</span></p>
+<p class="p8"><span class="s9"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s9">年化報酬率（</span><span class="s12">%</span><span class="s9">）</span></p>
+<p class="p2"><span class="s9">目前年生活費（</span><span class="s12">TWD</span><span class="s9">）</span></p>
+<p class="p9"><span class="s9">100000</span></p>
+<p class="p2"><span class="s9">年通膨率（</span><span class="s12">%</span><span class="s9">）</span></p>
+<p class="p2"><span class="s9">初始本金</span></p>
+<p class="p5"><span class="s6">BTC</span></p>
+<p class="p10"><span class="s9">TWD -</span></p>
+<p class="p11"><span class="s1"></span><br></p>
+<p class="p2"><span class="s9">持有</span><span class="s12"> BTC </span><span class="s9">數量（顆）</span></p>
+<p class="p9"><span class="s9">0.10</span></p>
+<p class="p3"><span class="s9">BTC </span><span class="s13">單價（</span><span class="s9">TWD/</span><span class="s13">顆）</span></p>
+<p class="p9"><span class="s9">3000000</span></p>
+<p class="p2"><span class="s9">（自動計算）</span></p>
+<p class="p2"><span class="s9">依「顆數</span><span class="s12"> × </span><span class="s9">單價」換算初始本金</span></p>
+<p class="p2"><span class="s9">突破年份（年利息</span><span class="s12"> ≥ </span><span class="s9">當年生活費）</span></p>
+<p class="p12"><span class="s9">—</span></p>
+<p class="p11"><span class="s1"></span><br></p>
+<p class="p2"><span class="s9">第</span><span class="s12"> 1 </span><span class="s9">年參考</span></p>
+<p class="p13"><span class="s1"></span><br></p>
+<p class="p14"><span class="s14">匯出</span><span class="s15"> CSV </span><span class="s14">明細</span></p>
+<p class="p13"><span class="s1"></span><br></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><span class="s9">年</span></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p15"><span class="s9">年齡</span></p>
+      </td>
+      <td valign="middle" class="td3">
+        <p class="p15"><span class="s9">年利息（</span><span class="s12">TWD</span><span class="s9">）</span></p>
+      </td>
+      <td valign="middle" class="td4">
+        <p class="p15"><span class="s9">當年生活費（</span><span class="s12">TWD</span><span class="s9">）</span></p>
+      </td>
+      <td valign="middle" class="td5">
+        <p class="p15"><span class="s9">期末資產（</span><span class="s12">TWD</span><span class="s9">）</span></p>
+      </td>
+      <td valign="middle" class="td6">
+        <p class="p15"><span class="s9">差額（利息</span><span class="s12">-</span><span class="s9">生活費）</span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p13"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">說明：利息＝期初資產</span><span class="s3">×</span><span class="s1">年化報酬率；生活費＝現在生活費</span><span class="s3">×(1+</span><span class="s1">通膨</span><span class="s3">)^(</span><span class="s1">年數</span><span class="s3">-1)</span><span class="s1">；突破年份為第一次滿足「年利息</span><span class="s3"> ≥ </span><span class="s1">當年生活費」。本工具為教育試算，未含稅務、費用、風險與價格波動。</span></p>
+<!-- 💰 打賞區塊：Investor Fuji 支持按鈕 -->
 <section style="
   text-align:center;
   margin-top:60px;
@@ -355,5 +148,6 @@
     支援 Apple Pay、Google Pay 與 信用卡
   </p>
 </section>
+
 </body>
 </html>

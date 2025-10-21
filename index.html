@@ -281,7 +281,7 @@
       const encoded = (x) => encodeURIComponent(x);
 
       // Increment total views
-      fetch(`https://api.countapi.xyz/hit/${encoded(NS)}/${encoded(TOTAL_KEY)}`)
+      fetch(`https://api.countapi.dev//hit/${encoded(NS)}/${encoded(TOTAL_KEY)}`)
         .then(r=>r.json()).then(d=>{ $('views').textContent = (d.value||0).toLocaleString('zh-TW'); })
         .catch(()=>{ $('views').textContent = '—'; });
 

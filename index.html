@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#0ea5e9;--ok:#10b981;--bad:#ef4444;--ring:#e2e8f0}
+    :root{--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#0ea5e9;--ring:#e2e8f0}
     *{box-sizing:border-box} body{margin:0;background:linear-gradient(#f8fafc,#fff);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji';color:var(--text)}
     .container{max-width:1080px;margin:24px auto;padding:0 16px}
     .title{font-weight:800;letter-spacing:-.02em}
@@ -28,9 +28,11 @@
     .muted{color:var(--muted);font-size:12px}
     .right{text-align:right}
     .btn{padding:10px 12px;border-radius:10px;border:1px solid var(--ring);background:#fff;cursor:pointer}
-    .btn-primary{background:var(--text);color:#fff;border-color:var(--text)}
+    .btn-primary{background:#0f172a;color:#fff;border-color:#0f172a}
     .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px}
     .footer{color:var(--muted);font-size:12px;line-height:1.6;margin:10px 0 30px}
+    .badge{display:none; align-items:center; gap:6px}
+    .badge img{height:20px; vertical-align:middle}
   </style>
 </head>
 <body>
@@ -42,8 +44,12 @@
       </div>
       <div class="row muted">
         <span>Investor Fuji · 工具原型</span>
-        <span class="pill" title="此數據由 countapi.xyz 提供，為概估值">
+        <span class="pill" id="counterPill" title="若第三方 API 被阻擋，將自動切換為備援徽章">
           👀 瀏覽 <b id="views">—</b> • 🧑‍🤝‍🧑 唯一 <b id="uniques">—</b>
+        </span>
+        <span class="badge" id="fallbackBadge">
+          <img id="hitsBadge" alt="views badge" />
+          <span class="muted">（備援）</span>
         </span>
       </div>
     </div>
@@ -150,7 +156,6 @@
     </div>
   </div>
 
-  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
@@ -197,12 +202,10 @@
         valuePrev = valueEnd;
       }
 
-      // Break-even
       const be = rows.find(d => d.interest >= d.expense);
       $('breakYear').textContent = be ? `第 ${be.year} 年（${be.age} 歲）` : '尚未在期間內達成';
       $('breakDetail').textContent = be ? `當年利息 TWD ${fmt(be.interest)} · 生活費 TWD ${fmt(be.expense)}` : '';
 
-      // First year
       if (rows[0]) {
         const d0 = rows[0];
         $('firstYear').innerHTML = `
@@ -212,7 +215,6 @@
         `;
       }
 
-      // Table
       const tb = $('table').querySelector('tbody');
       tb.innerHTML = '';
       rows.forEach(row => {
@@ -229,7 +231,6 @@
         tb.appendChild(tr);
       });
 
-      // Chart
       const labels = rows.map(r => 'Y'+r.year);
       const interestData = rows.map(r => Math.round(r.interest));
       const expenseData  = rows.map(r => Math.round(r.expense));
@@ -260,7 +261,6 @@
         chart.update();
       }
 
-      // CSV export
       $('exportBtn').onclick = () => {
         const header = ['year','age','interest','expense','valueEnd','diff'];
         const lines = [header.join(',')].concat(rows.map(r => [r.year,r.age,Math.round(r.interest),Math.round(r.expense),Math.round(r.valueEnd),Math.round(r.diff)].join(',')));
@@ -271,82 +271,48 @@
         URL.revokeObjectURL(url);
       };
     }
-
-    // ----- Visitor Counter (countapi.xyz) -----
-    (function(){
-      const NS = 'investorfuji-btc-calc'; // namespace
-      const TOTAL_KEY = 'pageviews';
-      const UNIQUE_KEY = 'uniques';
-      const UNIQUE_FLAG = 'fuji_calc_unique_flag';
-      const encoded = (x) => encodeURIComponent(x);
-
-      // Increment total views
-      fetch(`https://api.countapi.dev//hit/${encoded(NS)}/${encoded(TOTAL_KEY)}`)
-        .then(r=>r.json()).then(d=>{ $('views').textContent = (d.value||0).toLocaleString('zh-TW'); })
-        .catch(()=>{ $('views').textContent = '—'; });
-
-      // Unique (per-browser) once
-      const seen = localStorage.getItem(UNIQUE_FLAG);
-      const updateUnique = (path) => fetch(path).then(r=>r.json()).then(d=>{ $('uniques').textContent = (d.value||0).toLocaleString('zh-TW'); }).catch(()=>{ $('uniques').textContent = '—'; });
-      if (!seen) {
-        localStorage.setItem(UNIQUE_FLAG, '1');
-        updateUnique(`https://api.countapi.dev//hit/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
-      } else {
-        updateUnique(`https://api.countapi.dev//get/${encoded(NS)}/${encoded(UNIQUE_KEY)}`);
-      }
-    })();
-
     refresh();
   </script>
-  <!-- 顯示區塊（正常時顯示數字；失敗時顯示徽章） -->
-<span class="pill" id="counterPill">
-  👀 瀏覽 <b id="views">—</b> • 🧑‍🤝‍🧑 唯一 <b id="uniques">—</b>
-</span>
-<span class="badge" id="fallbackBadge" style="display:none">
-  <img id="hitsBadge" alt="views badge" style="height:20px" />
-  <span class="muted">（備援）</span>
-</span>
 
-<script>
-  (function(){
-    const $ = id => document.getElementById(id);
-    const setText = (id,v)=>{ const el=$(id); if (el) el.textContent = (v||0).toLocaleString('zh-TW'); };
+  <script>
+    (function(){
+      const $ = id => document.getElementById(id);
+      const setText = (id,v)=>{ const el=$(id); if (el) el.textContent = (v||0).toLocaleString('zh-TW'); };
 
-    // ① 固定使用你的公開網址（避免本機 file:// 導致徽章失效）
-    const PUBLIC_URL = "https://investorfuji.github.io/BtcPlan/"; // ← 若你的 Pages 網址不同，改這裡
+      const PUBLIC_URL = "https://investorfuji.github.io/BtcPlan/";
+      const NS = "investorfuji-BtcPlan";
+      const TOTAL_KEY = "pageviews";
+      const UNIQUE_KEY = "uniques";
+      const UNIQUE_FLAG = "fuji_calc_unique_flag_BtcPlan";
+      const base = "https://api.countapi.dev";
+      const hit = (k)=>fetch(`${base}/hit/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
+      const get = (k)=>fetch(`${base}/get/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
+      const timeout = (p,ms=2500)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms))]);
 
-    // ② countapi（主線）
-    const NS = "investorfuji-BtcPlan";         // 命名空間（可自訂，但請保持一致）
-    const TOTAL_KEY = "pageviews";
-    const UNIQUE_KEY = "uniques";
-    const UNIQUE_FLAG = "fuji_calc_unique_flag_BtcPlan"; // 每瀏覽器一次的旗標（避免和其他站衝突）
-    const base = "https://api.countapi.dev";
-    const hit = (k)=>fetch(`${base}/hit/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
-    const get = (k)=>fetch(`${base}/get/${encodeURIComponent(NS)}/${encodeURIComponent(k)}`, {cache:"no-store"});
-    const timeout = (p,ms=2500)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms))]);
+      const showFallback = () => {
+        const url = encodeURIComponent(PUBLIC_URL);
+        const badge = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${url}&count_bg=%233CAF50&title_bg=%23555555&title=views&edge_flat=true`;
+        const pill = $("counterPill");
+        if (pill) pill.style.display = "none";
+        const img = $("hitsBadge");
+        if (img) img.src = badge;
+        const fb = $("fallbackBadge");
+        if (fb) fb.style.display = "inline-flex";
+      };
 
-    // ③ hits.seeyoufarm（備援：只顯示瀏覽）
-    const showFallback = () => {
-      const url = encodeURIComponent(PUBLIC_URL);
-      const badge = `https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${url}&count_bg=%233CAF50&title_bg=%23555555&title=views&edge_flat=true`;
-      $("counterPill").style.display = "none";
-      $("hitsBadge").src = badge;
-      $("fallbackBadge").style.display = "inline-flex";
-    };
+      timeout(hit(TOTAL_KEY))
+        .then(r=>r.json()).then(d=>setText("views", d.value))
+        .catch(showFallback);
 
-    // 總瀏覽
-    timeout(hit(TOTAL_KEY))
-      .then(r=>r.json()).then(d=>setText("views", d.value))
-      .catch(showFallback);
-
-    // 唯一（每瀏覽器一次）
-    const seen = localStorage.getItem(UNIQUE_FLAG);
-    const req = seen ? get(UNIQUE_KEY) : hit(UNIQUE_KEY);
-    if (!seen) localStorage.setItem(UNIQUE_FLAG, "1");
-    timeout(req)
-      .then(r=>r.json()).then(d=>setText("uniques", d.value))
-      .catch(()=>{}); // 若失敗就不顯示唯一，但不影響頁面
-  })();
-</script>
+      try {
+        const seen = localStorage.getItem(UNIQUE_FLAG);
+        const req = seen ? get(UNIQUE_KEY) : hit(UNIQUE_KEY);
+        if (!seen) localStorage.setItem(UNIQUE_FLAG, "1");
+        timeout(req)
+          .then(r=>r.json()).then(d=>setText("uniques", d.value))
+          .catch(()=>{});
+      } catch(e) {}
+    })();
+  </script>
 </body>
 </html>
